@@ -4,7 +4,7 @@
 # Developed by Joseph Hobbs
 # This code is in the public domain
 
-def generate_commands(airfoil, mode, values, re=None, m=None, output=".pyfoil"):
+def generate_commands(airfoil, mode, values, re=None, m=None, output=".pyfoil", iterations=200):
     """
     Generate XFoil input commands
 
@@ -50,7 +50,8 @@ def generate_commands(airfoil, mode, values, re=None, m=None, output=".pyfoil"):
 
     # Add output file and initiate polar accumulation
     commands += [
-        "iter 200",
+        f"iter {iterations}",
+        "alfa 0",
         "pacc",
         output,
         "",

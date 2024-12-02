@@ -6,3 +6,6 @@
 
 # Ignore PyFoil output
 /.pyfoil
+
+# Ignore airfoil files
+/*.dat

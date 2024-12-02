@@ -33,6 +33,9 @@ class PyFoil(object):
         # Save verbosity
         self.verbose = False
 
+        # Save iterations
+        self.iter = 200
+
     def alfa(self, values):
         """
         Run XFoil with given angles of attack
@@ -69,7 +72,7 @@ class PyFoil(object):
             # This is a list
             xfoil_input = values
         else:
-            raise TypeError(f"invalid input to PyFoil {values}")
+            raise TypeError(f"invalid input to PyFoil: {values}")
 
         # Generate input commands
         commands = generate_commands(
@@ -79,6 +82,7 @@ class PyFoil(object):
             re=self.re,
             m=self.m,
             output=self.output,
+            iterations=self.iter,
         )
 
         # Send commands to XFoil
