@@ -25,8 +25,8 @@ def generate_commands(airfoil, mode, values, re=None, m=None, output=".pyfoil"):
         raise TypeError(f"invalid PyFoil mode {mode}")
 
     # Parse airfoil name
-    if airfoil[0:3] == "naca":
-        airfoil_command = f"naca {airfoil[4:7]}"
+    if airfoil[0:4] == "naca":
+        airfoil_command = f"naca {airfoil[4:8]}"
     else:
         airfoil_command = f"load {airfoil}"
 

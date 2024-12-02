@@ -80,16 +80,49 @@ def parse_output(output=".pyfoil"):
     # Initialize dictionary
     xfoil_values = {
         "alfa": [],
-        "CL": [],
-        "CD": [],
+        "CL":   [],
+        "CD":   [],
+        "CDp":  [],
+        "CDf":  [],
+        "CM":   [],
     }
 
     # Iterate through output
     for line in lines[line_index+1:]:
+        # Convert row to floating point values
         values = [float(val.strip()) for val in line.split(" ") if val.strip()]
+
         if values:
-            xfoil_values["alfa"].append(values[0])
-            xfoil_values["CL"].append(values[1])
-            xfoil_values["CD"].append(values[2])
+            # Set AoA
+            alfa = values[0]
+            xfoil_values["alfa"].append(alfa)
+
+            # Set CL
+            cl = values[1]
+            xfoil_values["CL"].append(cl)
+
+            # If CD is zero, we're in inviscid mode
+            # Use CDp as CD
+            if values[2] == 0:
+                # Inviscid mode
+                cd = values[3]
+            else:
+                # Viscous mode, use calculated CD
+                cd = values[2]
+            
+            # Set CD
+            xfoil_values["CD"].append(cd)
+
+            # Set CDp
+            cdp = values[3]
+            xfoil_values["CDp"].append(cdp)
+
+            # Calculate CDf as CD minus CDp
+            xfoil_values["CDf"].append(cd - cdp)
+
+            # Set CM
+            cm = values[4]
+            xfoil_values["CM"].append(cm)
+
 
     return xfoil_values
